@@ -5,9 +5,8 @@ const ConnectMongoDb = require("./databaseConnection/ConnectMongoDB");
 const PORT = process.env.PORT || 5001;
 const app = express();
 
-app.get("/", (req, res) => {
-	res.send("Hello World!");
-});
+const ChatRouter = require("./routes/chat-route");
+app.use("/api/chat", ChatRouter);
 
 app.listen(PORT, async () => {
 	await ConnectMongoDb();
