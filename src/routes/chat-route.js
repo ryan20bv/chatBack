@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getAllChat } = require("../controllers/chat-cont");
+const { getAllChat, addNewChat } = require("../controllers/chat-cont");
 
 const ChatRouter = Router();
 
@@ -11,5 +11,14 @@ const ChatRouter = Router();
 */
 
 ChatRouter.get("/", getAllChat);
+
+/* 
+	* @desc        		add/send new chat to server
+	! @serverRoute    POST "api/chat"
+	!	@additionalRoute "/"
+	? @access      		public
+*/
+
+ChatRouter.post("/", addNewChat);
 
 module.exports = ChatRouter;
