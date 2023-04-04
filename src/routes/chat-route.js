@@ -1,5 +1,9 @@
 const { Router } = require("express");
-const { getAllChat, addNewChat } = require("../controllers/chat-cont");
+const {
+	getAllChat,
+	addNewChat,
+	deleteChat,
+} = require("../controllers/chat-cont");
 
 const ChatRouter = Router();
 
@@ -20,5 +24,13 @@ ChatRouter.get("/", getAllChat);
 */
 
 ChatRouter.post("/", addNewChat);
+
+/* 
+	* @desc        		delete chat to server
+	! @serverRoute    delete "api/chat"
+	!	@additionalRoute "/:chat_id"
+	? @access      		public
+*/
+ChatRouter.delete("/:chat_id", deleteChat);
 
 module.exports = ChatRouter;

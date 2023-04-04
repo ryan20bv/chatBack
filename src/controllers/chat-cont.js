@@ -10,7 +10,8 @@ const ChatModel = require("../models/chatModels");
 const getAllChat = async (req, res, next) => {
 	try {
 		const chats = await ChatModel.find();
-		res.json(chats);
+
+		res.status(200).json(chats);
 	} catch (err) {
 		console.log(err);
 		res.status(500).send("Server Error");
@@ -36,14 +37,37 @@ const addNewChat = async (req, res, next) => {
 
 		await chat.save();
 
-		// io.emit("message", chat);
-
-		res.json(chat);
+		res.status(201).json(chat);
 	} catch (err) {
 		console.log(err);
 		res.status(500).send("Server Error");
 	}
 };
 
+/* 
+	* @desc        		delete chat to server
+	! @serverRoute    delete "api/chat"
+	!	@additionalRoute "/:chat_id"
+	? @access      		public
+*/
+
+const deleteChat = async (req, res, next) => {
+	const { chat_id } = req.params;
+	console.log(chat_id);
+	let foundChat;
+	try {
+		foundChat = await ChatModel.findById(chat_id);
+	} catch (err) {
+		console.log(err);
+	}
+	if (!foundChat) {
+		console.log("No chat found");
+		return;
+	}
+	await foundChat.deleteOne();
+	res.status(200).json({ message: "delete successfully" });
+};
+
 exports.getAllChat = getAllChat;
 exports.addNewChat = addNewChat;
+exports.deleteChat = deleteChat;
